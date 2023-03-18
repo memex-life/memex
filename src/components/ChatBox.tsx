@@ -42,9 +42,14 @@ const ChatBox: React.FC = () => {
       setInput('');
       setIsBotTyping(true);
       setTimeout(() => {
-        setMessages((prevMessages) => [...prevMessages, { text: input, sender: 'bot' }]);
+        // set response from bot
+        const bot_response: Message = {
+          text: 'Hello! How may I help you today?',
+          sender: 'bot',
+        };
+        setMessages((prevMessages) => [...prevMessages, bot_response]);
         setIsBotTyping(false);
-      }, 3000);
+      }, 300);
     }
   };
 
