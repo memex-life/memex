@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, TextField, Typography, Button } from '@material-ui/core';
+import { Box, TextField, Typography, Button, CircularProgress } from '@material-ui/core';
 import { styled } from "@mui/material/styles";
 
 interface Message {
@@ -26,6 +26,7 @@ const MessageBubble = styled(Box)<MessageBubbleProps>`
 const ChatBox: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [isBotTyping, setIsBotTyping] = useState(false);
 
   useEffect(() => {
     const greetingMessage: Message = {
@@ -37,8 +38,13 @@ const ChatBox: React.FC = () => {
 
   const handleSend = () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: 'user' }, { text: input, sender: 'bot' }]);
+      setMessages([...messages, { text: input, sender: 'user' }]);
       setInput('');
+      setIsBotTyping(true);
+      setTimeout(() => {
+        setMessages((prevMessages) => [...prevMessages, { text: input, sender: 'bot' }]);
+        setIsBotTyping(false);
+      }, 3000);
     }
   };
 
@@ -61,6 +67,14 @@ const ChatBox: React.FC = () => {
             </MessageBubble>
           </Box>
         ))}
+        {isBotTyping && (
+          <Box alignSelf="flex-start" display="flex" alignItems="center" pl={1}>
+            <CircularProgress size={16} />
+            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+              Typing...
+            </Typography>
+          </Box>
+        )}
       </Box>
       <Box display="flex" width="100%">
         <TextField
