@@ -1,6 +1,7 @@
-function polling() {
-  // console.log("polling");
-  setTimeout(polling, 1000 * 30);
-}
+// background service worker
 
-polling();
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  const { textContent, metadata } = message;
+  console.log(textContent, metadata);
+  // Store textContent and metadata in database
+});

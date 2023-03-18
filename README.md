@@ -26,3 +26,14 @@ The popup page acts as a chat interface to answer your questions using the infor
 ## Getting Started
 Install the extention, setup your OpenAI token.
 
+## Develop
+
+install dependency
+```
+npm install 
+```
+Watch build
+```
+npm run watch
+```
+import the `dis/` into chrome 

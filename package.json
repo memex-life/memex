@@ -1,20 +1,19 @@
 {
-  "name": "chrome-extension-typescript-starter",
+  "name": "memex",
   "version": "1.0.0",
-  "description": "chrome-extension-typescript-starter",
-  "main": "index.js",
+  "description": "Your second brain for web browsing. A browser extension that acts like a personal memex machine.",
+  "author": "Your Name Here",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/memex-life/memex.git"
+  },
   "scripts": {
     "watch": "webpack --config webpack/webpack.dev.js --watch",
     "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "npx jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\""
-  },
-  "author": "",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
   },
   "dependencies": {
     "react": "^17.0.1",
