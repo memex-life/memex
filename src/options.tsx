@@ -9,5 +9,5 @@ form.addEventListener("submit", (event) => {
 });
 
 chrome.storage.sync.get("apiKey", (data) => {
-  (document.querySelector("#apiKey") as HTMLInputElement).value = data.apiKey || "";
+  (document.querySelector("#api-key") as HTMLInputElement).value = data.apiKey || "";
 });

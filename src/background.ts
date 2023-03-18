@@ -18,34 +18,39 @@ chrome.runtime.onInstalled.addListener(() => {
 
 
 
-
-chrome.runtime.onMessage.addListener((message: Message, sender, sendResponse) => {
-  console.log("message received");
-  chrome.storage.sync.get("apiKey", (data) => {
-    const apiKey = data.apiKey;
-    if (!apiKey) {
-      chrome.runtime.openOptionsPage();
-    }
-    console.log("API KEY: " + apiKey);
-
-  });
-
+// Define the message handler function
+function handleMessage(message: Message, sender: any, sendResponse: any): void {
+  console.log("Message received");
 
   const { textContent, metadata } = message;
   console.log(`Received message from URL: ${metadata.url}, timestamp: ${metadata.timestamp}`);
-  // console.log(`Content: ${textContent.slice(0, 100)}...`);
+  const domain = new URL(metadata.url).hostname;
 
-  const url = new URL(metadata.url);
-  const domain = url.hostname;
+  incrementDomainCount(domain, () => {
+    updateBadge();
+  });
+}
 
+// Increments the message count for a given domain
+function incrementDomainCount(domain: string, callback: Function): void {
   chrome.storage.local.get('domainCounts', (result) => {
     const domainCounts = result.domainCounts as DomainCounts || {};
     const count = domainCounts[domain] || 0;
-
     domainCounts[domain] = count + 1;
-    chrome.storage.local.set({ domainCounts });
+    chrome.storage.local.set({ domainCounts }, () => {
+      callback();
+    });
+  });
+}
 
+// Updates the badge text with the total message count
+function updateBadge(): void {
+  chrome.storage.local.get('domainCounts', (result) => {
+    const domainCounts = result.domainCounts as DomainCounts || {};
     const totalCount = Object.values(domainCounts).reduce((acc, val) => acc + val, 0);
     chrome.action.setBadgeText({ text: `${totalCount}` });
   });
-});
+}
+
+// Register the message handler function
+chrome.runtime.onMessage.addListener(handleMessage);
