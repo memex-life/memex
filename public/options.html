@@ -1,12 +1,24 @@
+<!-- options.html -->
 <!DOCTYPE html>
 <html>
-<head>
-  <title>My Test Extension Options</title>
-  <script src="js/vendor.js"></script>
-</head>
+  <head>
+    <title>Options</title>
+    <script src="js/vendor.js"></script>
 
-<body>
-  <div id="root"></div>
-  <script src="js/options.js"></script>
-</body>
+  </head>
+  <body>
+    <h1>Configs</h1>
+    
+    <form>
+      <label>
+        openAI API Key:
+        <input type="password" id="api-key" required />
+      </label>
+      <br />
+      <button type="submit">Save</button>
+
+    </form>
+
+    <script src="js/options.js"></script>
+  </body>
 </html>
