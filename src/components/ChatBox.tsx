@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Typography, Button, CircularProgress } from '@material-ui/core';
 import { styled } from "@mui/material/styles";
+import { knowledgeBase } from './KnowledgeBase';
+import { Document } from '../types';
 
 interface Message {
   text: string;
@@ -9,6 +11,11 @@ interface Message {
 
 interface MessageBubbleProps {
   sender: 'user' | 'bot';
+}
+
+function getAnswer(question: string) {
+  const answer = knowledgeBase.answerQuestion(question);
+  return answer;
 }
 
 const MessageBubble = styled(Box)<MessageBubbleProps>`
@@ -42,9 +49,9 @@ const ChatBox: React.FC = () => {
       setInput('');
       setIsBotTyping(true);
       setTimeout(() => {
-        // set response from bot
+        const response = getAnswer(input);
         const bot_response: Message = {
-          text: 'Hello! How may I help you today?',
+          text: response,
           sender: 'bot',
         };
         setMessages((prevMessages) => [...prevMessages, bot_response]);

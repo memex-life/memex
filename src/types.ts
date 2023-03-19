@@ -7,3 +7,9 @@ export interface Message {
     timestamp: string;
   };
 }
+export interface Document  {
+  textContent: string;
+  metadata: {
+      [key: string]: string;
+  };
+};

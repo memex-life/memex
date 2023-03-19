@@ -1,6 +1,9 @@
 // background.ts
 
-import { Message } from './types';
+import { Message, Document } from './types';
+
+import { knowledgeBase } from './components/KnowledgeBase';
+
 
 interface DomainCounts {
   [key: string]: number;
@@ -16,7 +19,18 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 
-
+// Define put message into knowledge base
+function putDocument(message: Message): void {
+  const metadata = message.metadata;
+  const document: Document = {
+    textContent: message.textContent,
+    metadata: {
+      url: message.metadata.url,
+      timestamp: message.metadata.timestamp,
+    },
+  };
+  knowledgeBase.putDocument(document);
+}
 
 // Define the message handler function
 function handleMessage(message: Message, sender: any, sendResponse: any): void {
@@ -25,7 +39,7 @@ function handleMessage(message: Message, sender: any, sendResponse: any): void {
   const { textContent, metadata } = message;
   console.log(`Received message from URL: ${metadata.url}, timestamp: ${metadata.timestamp}`);
   const domain = new URL(metadata.url).hostname;
-
+  putDocument(message);
   incrementDomainCount(domain, () => {
     updateBadge();
   });
@@ -51,6 +65,11 @@ function updateBadge(): void {
     chrome.action.setBadgeText({ text: `${totalCount}` });
   });
 }
+
+
+
+
+
 
 // Register the message handler function
 chrome.runtime.onMessage.addListener(handleMessage);
