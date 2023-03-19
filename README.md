@@ -20,20 +20,33 @@ Then it will use AI to retrieve that knowledge whenever you need it.
 ## How it works 
 
 When you browse the web, this extension will inject a script to capture the text content on the pages you visit. It will send that content to the backend service-worker for processing
-The service-worker will break the content into pieces and store it in a database.
+The service-worker will break the content into pieces and store it in a database. 
 The popup page acts as a chat interface to answer your questions using the information in the database.
 
 ## Getting Started
-Install the extention, setup your OpenAI token.
 
-## Develop
 
-install dependency
+### Build & import Extension
+Build extension files into `dist/` folder
+```bash
+npm install
+npm run build # or npm run watch
 ```
-npm install 
+[Load extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked)
+
+### Start the Kownledge Base server
+Currently the [LangchainJs](https://github.com/hwchase17/langchainjs) has not yet support browser runtime. The extension still needs a backend server as Knowledge Base implementaion. 
+
+set environments:
 ```
-Watch build
+export TOKENIZERS_PARALLELISM=false
+export OPENAI_API_KEY=<your-api-key>
+cd server
+FLASK_APP=server flask run
 ```
-npm run watch
-```
-import the `dis/` into chrome 
+### Start using
+
+Once you have completed the above steps, you can start using the Memex browser extension to enhance your web browsing experience.
+* As you browse the web, the extension will automatically capture and store the text content from the web pages you visit, along with their metadata, in your personalized knowledge base.
+* When you need to retrieve information or recall something from your browsing history, simply open the chat interface by clicking on the Memex extension icon. Type your question or query into the chat interface and press Enter or click the Send button. The Memex extension will use AI to search your knowledge base and provide you with the most relevant information based on your query.
+
