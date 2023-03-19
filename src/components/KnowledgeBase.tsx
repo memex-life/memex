@@ -10,7 +10,7 @@ class KnowledgeBase {
     putDocument(document: Document) {
         console.log('Document added to the knowledge base:', document);
     }
-    answerQuestion(question: string) {
+    async answerQuestion(question: string): Promise<string> {
         console.log('Question answered:', question);
         return 'I do not know from the KnowledgeBase class';
     }
@@ -22,7 +22,7 @@ class RemoteKnowledgeBase extends KnowledgeBase {
 
     constructor() {
         super();
-        this.serverUrl = 'http://localhost:3000';
+        this.serverUrl = 'http://localhost:5000';
     }
     putDocument(document: Document) {
         // send document to the server using fetch
@@ -38,10 +38,26 @@ class RemoteKnowledgeBase extends KnowledgeBase {
             console.log('Response from the server:', response);
         });
     }
-    answerQuestion(question: string) {
-        return 'I do not know from the RemoteKnowledgeBase class';
-        // send question to the server and return the answer
 
+    async answerQuestion(question: string): Promise<string> {
+        // send question to the server using fetch
+        // return the answer
+
+        const url = this.serverUrl + '/answer';
+        let response  = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ question: question }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        if (response.ok) {
+            let json = await response.json()
+            return json.answer
+        }
+        else {
+            return 'Error: ' + response.status
+        }
     }
 }
 

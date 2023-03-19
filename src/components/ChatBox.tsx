@@ -13,8 +13,8 @@ interface MessageBubbleProps {
   sender: 'user' | 'bot';
 }
 
-function getAnswer(question: string) {
-  const answer = knowledgeBase.answerQuestion(question);
+async function getAnswer(question: string): Promise<string> {
+  const answer = await knowledgeBase.answerQuestion(question);
   return answer;
 }
 
@@ -48,8 +48,8 @@ const ChatBox: React.FC = () => {
       setMessages([...messages, { text: input, sender: 'user' }]);
       setInput('');
       setIsBotTyping(true);
-      setTimeout(() => {
-        const response = getAnswer(input);
+      setTimeout(async () => {
+        const response = await getAnswer(input);
         const bot_response: Message = {
           text: response,
           sender: 'bot',
