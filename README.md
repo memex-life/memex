@@ -1,6 +1,8 @@
 # Memex
 Your second brain for web browsing. Picture possessing the ultimate ability of total recall.
 
+<img width="953" alt="image" src="https://user-images.githubusercontent.com/6213976/226204331-6ceb4bfb-9942-4d98-be8e-de70d7269df0.png">
+
 ## Overview
 
 This project aims to create a browser extension that acts like a personal memex machine.
