@@ -3,8 +3,8 @@
 import { Message } from './types';
 
 function sendPageContent() {
-  const textNodes = document.querySelectorAll('body, p, h1, h2, h3, h4, h5, h6');
-  const textContent = Array.from(textNodes).map((node) => node.textContent).join(' ');
+  // const textNodes = document.querySelectorAll('body, p, h1, h2, h3, h4, h5, h6');
+  const textContent = document.body.innerText;
   const metadata = {
     url: window.location.href,
     timestamp: new Date().toISOString(),
