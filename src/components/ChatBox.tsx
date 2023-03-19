@@ -66,23 +66,24 @@ const ChatBox: React.FC = () => {
     }
   };
 
+
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" p={2} width="300px">
-      <Box display="flex" flexDirection="column" width="100%" mb={2} maxHeight="300px" overflow="auto">
+    <Box display="flex" flexDirection="column" alignItems="center" p={2} width="400px" height="500px">
+      <Box display="flex" flexDirection="column" width="100%" mb={2} maxHeight="400px" overflow="auto" flexGrow={1}>
         {messages.map((message, index) => (
           <Box
             key={index}
             alignSelf={message.sender === 'user' ? 'flex-end' : 'flex-start'}
           >
             <MessageBubble sender={message.sender}>
-              <Typography variant="body1">{message.text}</Typography>
+              <Typography variant="body2">{message.text}</Typography>
             </MessageBubble>
           </Box>
         ))}
         {isBotTyping && (
           <Box alignSelf="flex-start" display="flex" alignItems="center" pl={1}>
             <CircularProgress size={16} />
-            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+            <Typography variant="body2" style={{ marginLeft: '8px' }}>
               Typing...
             </Typography>
           </Box>
